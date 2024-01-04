@@ -1,33 +1,42 @@
-import type { Metadata } from 'next'
-import Link from 'next/link'
-import './globals.css'
+'use client'
 
-export const metadata: Metadata = {
-  title: '口コミ交換所',
-  description: '',
-}
+import React, {useState} from "react";
+import HeaderMenu from "@/app/_components/header_menu"
+import LoginContext, {CurrentUserAccount} from "@/app/_contexts/login_context"
+import './globals.css'
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  const [currentUserAccount, setCurrentUserAccount] = useState<CurrentUserAccount>({
+    id: null,
+    displayName: null,
+  })
+
+  const [accessToken, setAccessToken] = useState<string | null>(null)
+
   return (
     <html lang="ja">
-      <body className="text-md text-gray-800">
-        <div className="flex justify-between p-4">
-          <div>
+      <LoginContext.Provider value={{
+        currentUserAccount: currentUserAccount,
+        setCurrentUserAccount: setCurrentUserAccount,
+        token: accessToken,
+        setToken: setAccessToken,
+      }}>
+        <body className="text-md text-gray-800">
+          <div className="flex justify-between p-4">
+            <div>
 
+            </div>
+            <HeaderMenu />
           </div>
-          <div className="flex">
-            <Link href="/signup" className="rounded-md ring-1 ring-emerald-600 text-emerald-600 hover:opacity-75 px-4 py-2 mx-1">会員登録</Link>
-            <Link href=""  className="rounded-md ring-1 ring-emerald-600 text-emerald-600 hover:opacity-75 px-4 py-2 mx-1">ログイン</Link>
-          </div>
-        </div>
-        <main className="my-4 px-4">
-          {children}
-        </main>
-      </body>
+          <main className="my-4 px-4">
+            {children}
+          </main>
+        </body>
+      </LoginContext.Provider>
     </html>
   )
 }
