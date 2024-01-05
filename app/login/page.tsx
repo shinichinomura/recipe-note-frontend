@@ -1,11 +1,13 @@
 'use client'
 
 import React, { useState, useContext } from 'react'
+import {useRouter} from "next/navigation"
 import LoginContext from "@/app/_contexts/login_context"
 import ErrorMessages from "@/app/_components/error_messages"
 
 export default function Login() {
   const loginContext = useContext(LoginContext)
+  const router = useRouter()
 
   const submit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -13,13 +15,14 @@ export default function Login() {
     const formData = new FormData(event.currentTarget)
     const data = Object.fromEntries(formData.entries())
 
-    fetch('http://localhost:3000/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
+    fetch(
+      'http://localhost:3000/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
       .then((response) => {
         return response.json()
       })
@@ -33,6 +36,7 @@ export default function Login() {
             displayName: data.user_account.display_name
           })
           loginContext.setToken(data.token)
+          router.push('/mypage')
         }
       })
   }
