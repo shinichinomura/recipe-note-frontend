@@ -1,7 +1,15 @@
 'use client'
 
-import React, {useState, useContext} from "react"
+import React, {useState, useContext, useEffect} from "react"
 import LoginContext from "@/app/_contexts/login_context"
+
+type RecipeResponse = {
+  id: number
+  url: string
+  title: string
+  image_url: string
+  registered_at: string
+}
 
 export default function Mypage() {
   const loginContext = useContext(LoginContext)
@@ -9,6 +17,27 @@ export default function Mypage() {
   const [recipeUrl, setRecipeUrl] = useState<string>("")
   const [recipeTitle, setRecipeTitle] = useState<string>("")
   const [recipeImageUrl, setRecipeImageUrl] = useState<string>("")
+
+  const [recipes, setRecipes] = useState<RecipeResponse[]>([])
+
+  useEffect(() => {
+    fetch(`http://localhost:3000/secure/recipes`, {
+      method: "GET",
+      headers: {
+        'Authorization': `Bearer ${loginContext.token}`
+      }
+    })
+      .then((response) => {
+        return response.json()
+      })
+      .then((data:{status:string, recipes:RecipeResponse[]}) => {
+        if (data.status === 'error') {
+        }
+        else {
+          setRecipes(data.recipes)
+        }
+      })
+  }, [])
 
   const recipeUrlChanged = (value: string) => {
     setRecipeUrl(value)
@@ -98,6 +127,22 @@ export default function Mypage() {
                   className="w-full rounded-md bg-emerald-600 hover:bg-emerald-500 py-2 text-white"
           >レシピを登録</button>
         </div>
+      </div>
+      <div className="mx-auto w-full max-w-sm mt-8">
+        <ul>
+          {recipes.map((recipe) => {
+            return (
+              <li key={recipe.id} className="flex mb-4">
+                <div className="flex-none w-36">
+                  {recipe.image_url && <img src={recipe.image_url} alt={recipe.title} className="w-36 object-contain rounded-md"/>}
+                </div>
+                <div className="flex-grow ml-2">
+                  <span className="text-sm"><a href={recipe.url} target="_blank">{recipe.title}</a></span>
+                </div>
+              </li>
+            )
+          })}
+        </ul>
       </div>
     </div>
   )
