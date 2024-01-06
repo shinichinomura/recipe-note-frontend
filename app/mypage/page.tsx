@@ -19,6 +19,7 @@ export default function Mypage() {
   const [recipeImageUrl, setRecipeImageUrl] = useState<string>("")
 
   const [previewFailed, setPreviewFailed] = useState<boolean>(false)
+  const [showPreview, setShowPreview] = useState<boolean>(false)
 
   const [recipes, setRecipes] = useState<RecipeResponse[]>([])
 
@@ -49,6 +50,11 @@ export default function Mypage() {
     setRecipeUrl(value)
 
     if (value === "") {
+      setPreviewFailed(false)
+      setShowPreview(false)
+      setRecipeTitle("")
+      setRecipeImageUrl("")
+
       return
     }
 
@@ -65,10 +71,13 @@ export default function Mypage() {
       .then((data) => {
         if (data.status === 'error') {
           setPreviewFailed(true)
+          setShowPreview(false)
         }
         else {
+          setPreviewFailed(false)
           setRecipeTitle(data.og_title)
           setRecipeImageUrl(data.og_image_url)
+          setShowPreview(true)
         }
       })
   }
@@ -99,6 +108,7 @@ export default function Mypage() {
           setRecipeUrl("")
           setRecipeTitle("")
           setRecipeImageUrl("")
+          setShowPreview(false)
 
           loadRecipes()
         }
@@ -124,7 +134,19 @@ export default function Mypage() {
       </div>
       <div className="mx-auto w-full max-w-sm">
         {
-          previewFailed ? (
+          showPreview && (
+            <div className="flex mt-8">
+              <div className="flex-none">
+                <img src={recipeImageUrl} className="w-36 object-contain"/>
+              </div>
+              <div className="flex-grow ml-4">
+                <div className="text-md">{recipeTitle}</div>
+              </div>
+            </div>
+          )
+        }
+        {
+          previewFailed && (
             <div>
               <div className="rounded-md border border-solid border-red-400 p-2 text-red-400 mt-2">
                 <div className="text-center text-md">指定されたURLの情報を取得できませんでした</div>
@@ -140,17 +162,9 @@ export default function Mypage() {
                 />
               </div>
             </div>
-          ) : (
-            <div className="flex mt-8">
-              <div className="flex-none">
-                <img src={recipeImageUrl} className="w-36 object-contain"/>
-              </div>
-              <div className="flex-grow ml-4">
-                <div className="text-md">{recipeTitle}</div>
-              </div>
-            </div>
           )
         }
+
         <div className="mt-6">
           <button onClick={(event) => addRecipe(event)}
                   disabled={!recipeUrl || !recipeTitle}
