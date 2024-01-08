@@ -10,7 +10,7 @@ export default function HeaderMenu() {
   const router = useRouter()
 
   const LogOut = () => {
-    fetch('http://localhost:3000/logout', {
+    fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/logout`, {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${loginContext.token}`

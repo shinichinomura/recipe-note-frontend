@@ -16,7 +16,7 @@ export default function Login() {
     const data = Object.fromEntries(formData.entries())
 
     fetch(
-      'http://localhost:3000/login', {
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

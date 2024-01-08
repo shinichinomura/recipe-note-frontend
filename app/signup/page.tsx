@@ -10,7 +10,7 @@ export default function Signup() {
     const formData = new FormData(event.currentTarget)
     const data = Object.fromEntries(formData.entries())
 
-    fetch('http://localhost:3000/signup', {
+    fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/signup`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

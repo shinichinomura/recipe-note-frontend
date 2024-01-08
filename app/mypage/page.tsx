@@ -24,7 +24,7 @@ export default function Mypage() {
   const [recipes, setRecipes] = useState<RecipeResponse[]>([])
 
   const loadRecipes = () => {
-    fetch(`http://localhost:3000/secure/recipes`, {
+    fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/secure/recipes`, {
       method: "GET",
       headers: {
         'Authorization': `Bearer ${loginContext.token}`
@@ -58,7 +58,7 @@ export default function Mypage() {
       return
     }
 
-    fetch(`http://localhost:3000/secure/recipes/preview?url=${value}`, {
+    fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/secure/recipes/preview?url=${value}`, {
       method: "GET",
       headers: {
         'Content-Type': 'application/json',
@@ -90,7 +90,7 @@ export default function Mypage() {
     }
 
     fetch(
-      'http://localhost:3000/secure/recipes', {
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/secure/recipes`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
