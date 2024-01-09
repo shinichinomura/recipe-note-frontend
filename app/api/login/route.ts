@@ -18,18 +18,17 @@ export async function POST(request: NextRequest) {
 }
 
 export async function GET(request: NextRequest) {
-  if (cookies().get('token')) {
+  if (cookies().has('token')) {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/secure/user_accounts/me`, {
       method: 'GET',
       headers: {
         Authorization: `Bearer ${cookies().get('token').value}`
       }
     })
-    return response;
+
+    return response
   }
   else {
-    cookies().delete('token')
-
     return Response.json({ status: "error" })
   }
 }

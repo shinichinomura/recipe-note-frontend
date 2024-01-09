@@ -1,7 +1,7 @@
 'use client'
 
-import React, {useState, useContext, useEffect} from "react"
-import LoginContext from "@/app/_contexts/login_context"
+import React, {useState, useEffect} from "react"
+import {useRequireLogin} from "@/app/_hooks/use_require_login";
 
 type RecipeResponse = {
   id: number
@@ -12,8 +12,6 @@ type RecipeResponse = {
 }
 
 export default function Mypage() {
-  const loginContext = useContext(LoginContext)
-
   const [recipeUrl, setRecipeUrl] = useState<string>("")
   const [recipeTitle, setRecipeTitle] = useState<string>("")
   const [recipeImageUrl, setRecipeImageUrl] = useState<string>("")
@@ -22,6 +20,8 @@ export default function Mypage() {
   const [showPreview, setShowPreview] = useState<boolean>(false)
 
   const [recipes, setRecipes] = useState<RecipeResponse[]>([])
+
+  useRequireLogin()
 
   const loadRecipes = () => {
     fetch(`/api/secure/recipes`, {

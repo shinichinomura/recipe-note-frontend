@@ -11,11 +11,13 @@ const serverActionUrlToApiUrl = (url: string) => {
 export async function GET (request: NextRequest) {
   const apiUrl = serverActionUrlToApiUrl(request.url)
 
+  const token = cookies().has('token') ? cookies().get('token').value : null
+
   const response = await fetch(apiUrl, {
     method: 'GET',
-    headers: {
-      Authorization: `Bearer ${cookies().get('token').value}`
-    }
+    headers: token ? {
+      Authorization: `Bearer ${token}`
+    } : {}
   })
 
   return response
