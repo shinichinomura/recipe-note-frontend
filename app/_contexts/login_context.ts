@@ -11,17 +11,13 @@ export type CurrentUserAccountSetter = (currentUserAccount: CurrentUserAccount) 
 
 const LoginContext = createContext<{
   currentUserAccount: CurrentUserAccount,
-  setCurrentUserAccount: CurrentUserAccountSetter,
-  token: string|null,
-  setToken: (token: string|null) => void
+  setCurrentUserAccount: CurrentUserAccountSetter
 }>({
   currentUserAccount: {
     id: null,
     displayName: null
   },
-  setCurrentUserAccount: (currentUserAccount: CurrentUserAccount) => {},
-  token: null,
-  setToken: (token: string|null) => {},
+  setCurrentUserAccount: (currentUserAccount: CurrentUserAccount) => {}
 })
 
 export default LoginContext

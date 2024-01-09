@@ -10,11 +10,8 @@ export default function HeaderMenu() {
   const router = useRouter()
 
   const LogOut = () => {
-    fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/logout`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${loginContext.token}`
-      }
+    fetch(`/api/logout`, {
+      method: 'POST'
     })
       .then((response) => {
         return response.json()
@@ -24,7 +21,6 @@ export default function HeaderMenu() {
           id: null,
           displayName: null
         })
-        loginContext.setToken(null)
         router.push('/')
       })
   }

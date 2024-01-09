@@ -16,7 +16,7 @@ export default function Login() {
     const data = Object.fromEntries(formData.entries())
 
     fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/login`, {
+      `/api/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -35,7 +35,6 @@ export default function Login() {
             id: data.user_account.id,
             displayName: data.user_account.display_name
           })
-          loginContext.setToken(data.token)
           router.push('/mypage')
         }
       })

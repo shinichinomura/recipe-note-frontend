@@ -15,15 +15,11 @@ export default function RootLayout({
     displayName: null,
   })
 
-  const [accessToken, setAccessToken] = useState<string | null>(null)
-
   return (
     <html lang="ja">
       <LoginContext.Provider value={{
         currentUserAccount: currentUserAccount,
-        setCurrentUserAccount: setCurrentUserAccount,
-        token: accessToken,
-        setToken: setAccessToken,
+        setCurrentUserAccount: setCurrentUserAccount
       }}>
         <body className="text-md text-gray-800">
           <div className="flex justify-between p-4">
