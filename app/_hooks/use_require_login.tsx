@@ -18,5 +18,5 @@ export function useRequireLogin() {
           window.location.href = "/login"
         }
       })
-  }, [location.pathname])
+  }, [])
 }
