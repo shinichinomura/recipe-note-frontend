@@ -2,11 +2,12 @@ import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
+  const bodyContent = await request.text()
+
   const response = await fetch( `${process.env.NEXT_PUBLIC_API_BASE_URL}/login`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    duplex: "half",
-    body: request.body
+    body: bodyContent
   })
 
   const data = await response.json()
@@ -18,12 +19,15 @@ export async function POST(request: NextRequest) {
 }
 
 export async function GET(request: NextRequest) {
-  if (cookies().has('token')) {
+  const tokenCookie = cookies().get('token')
+  const headers = tokenCookie === undefined ? new Headers() : new Headers({
+    Authorization: `Bearer ${tokenCookie.value}`
+  })
+
+  if (tokenCookie) {
     const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/secure/user_accounts/me`, {
       method: 'GET',
-      headers: {
-        Authorization: `Bearer ${cookies().get('token').value}`
-      }
+      headers: headers
     })
 
     return response

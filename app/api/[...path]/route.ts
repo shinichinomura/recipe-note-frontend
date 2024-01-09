@@ -11,13 +11,14 @@ const serverActionUrlToApiUrl = (url: string) => {
 export async function GET (request: NextRequest) {
   const apiUrl = serverActionUrlToApiUrl(request.url)
 
-  const token = cookies().has('token') ? cookies().get('token').value : null
+  const tokenCookie = cookies().get('token')
+  const headers = tokenCookie === undefined ? new Headers() : new Headers({
+    Authorization: `Bearer ${tokenCookie.value}`
+  })
 
   const response = await fetch(apiUrl, {
     method: 'GET',
-    headers: token ? {
-      Authorization: `Bearer ${token}`
-    } : {}
+    headers: headers
   })
 
   return response
@@ -26,14 +27,19 @@ export async function GET (request: NextRequest) {
 export async function POST (request: NextRequest) {
   const apiUrl = serverActionUrlToApiUrl(request.url)
 
+  const tokenCookie = cookies().get('token')
+  const headers = tokenCookie === undefined ? new Headers() : new Headers({
+    Authorization: `Bearer ${tokenCookie.value}`
+  })
+
+  headers.append('Content-Type', 'application/json')
+
+  const bodyContent = await request.text()
+
   const response = await fetch(apiUrl, {
     method: 'POST',
-    headers: {
-      Authorization: `Bearer ${cookies().get('token').value}`,
-      'Content-Type': 'application/json'
-    },
-    duplex: "half",
-    body: request.body
+    headers: headers,
+    body: bodyContent
   })
 
   return response
@@ -42,13 +48,19 @@ export async function POST (request: NextRequest) {
 export async function PUT (request: NextRequest) {
   const apiUrl = serverActionUrlToApiUrl(request.url)
 
+  const tokenCookie = cookies().get('token')
+  const headers = tokenCookie === undefined ? new Headers() : new Headers({
+    Authorization: `Bearer ${tokenCookie.value}`
+  })
+
+  headers.append('Content-Type', 'application/json')
+
+  const bodyContent = await request.text()
+
   const response = await fetch(apiUrl, {
     method: 'PUT',
-    headers: {
-      Authorization: `Bearer ${cookies().get('token').value}`
-    },
-    duplex: "half",
-    body: request.body
+    headers: headers,
+    body: bodyContent
   })
 
   return response
