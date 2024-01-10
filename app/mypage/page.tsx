@@ -1,7 +1,8 @@
 'use client'
 
 import React, {useState, useEffect} from "react"
-import {useRequireLogin} from "@/app/_hooks/use_require_login";
+import FadeLoader from "react-spinners/FadeLoader"
+import {useRequireLogin} from "@/app/_hooks/use_require_login"
 
 type RecipeResponse = {
   id: number
@@ -16,6 +17,7 @@ export default function Mypage() {
   const [recipeTitle, setRecipeTitle] = useState<string>("")
   const [recipeImageUrl, setRecipeImageUrl] = useState<string>("")
 
+  const [loading, setLoading] = useState<boolean>(false)
   const [previewFailed, setPreviewFailed] = useState<boolean>(false)
   const [showPreview, setShowPreview] = useState<boolean>(false)
 
@@ -55,10 +57,12 @@ export default function Mypage() {
       return
     }
 
+    setLoading(true)
     fetch(`/api/secure/recipes/preview?url=${value}`, {
       method: "GET"
     })
       .then((response) => {
+        setLoading(false)
         return response.json()
       })
       .then((data) => {
@@ -122,6 +126,15 @@ export default function Mypage() {
         />
       </div>
       <div className="mx-auto w-full max-w-sm">
+        {
+          loading && (
+            <div className="flex mt-8">
+              <div className="flex-grow">
+                <FadeLoader loading={loading} color="#ccc" height="12" cssOverride={{ margin: "auto" }} />
+              </div>
+            </div>
+          )
+        }
         {
           showPreview && (
             <div className="flex mt-8">
