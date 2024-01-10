@@ -46,13 +46,13 @@ export default function RootLayout({
         setCurrentUserAccount: setCurrentUserAccount
       }}>
         <body className="text-md text-gray-800">
-          <div className="flex justify-between p-4">
+          <div className="flex justify-between p-4 bg-emerald-300">
             <div>
 
             </div>
             <HeaderMenu />
           </div>
-          <main className="my-4 px-4">
+          <main>
             {children}
           </main>
         </body>

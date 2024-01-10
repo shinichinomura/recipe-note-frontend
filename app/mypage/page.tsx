@@ -110,8 +110,8 @@ export default function Mypage() {
 
   return (
     <div className="flex flex-1 flex-col justify-center">
-      <div className="mx-auto w-full max-w-sm">
-        <h2 className="text-2xl text-center">マイページ</h2>
+      <div className="w-full p-2 bg-emerald-50 border-b border-emerald-200">
+        <h2 className="text-sm text-emerald-600">マイページ</h2>
       </div>
       <div className="mx-auto w-full max-w-sm mt-8">
         <label htmlFor="recipeUrl" className="block text-sm text-gray-500">レシピURL</label>
@@ -170,7 +170,7 @@ export default function Mypage() {
         <div className="mt-6">
           <button onClick={(event) => addRecipe(event)}
                   disabled={!recipeUrl || !recipeTitle}
-                  className="w-full rounded-md bg-emerald-600 hover:bg-emerald-500 py-2 text-white disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full rounded-md bg-emerald-500 hover:bg-emerald-400 py-2 text-white disabled:opacity-50 disabled:cursor-not-allowed"
           >レシピを登録
           </button>
         </div>

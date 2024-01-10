@@ -30,12 +30,12 @@ export default function HeaderMenu() {
       {
         !loginContext.currentUserAccount.id ? (
           <>
-            <Link href="/signup" className="rounded-md ring-1 ring-emerald-600 text-emerald-600 hover:opacity-75 px-4 py-2 mx-1">会員登録</Link>
-            <Link href="/login"  className="rounded-md ring-1 ring-emerald-600 text-emerald-600 hover:opacity-75 px-4 py-2 mx-1">ログイン</Link>
+            <Link href="/signup" className="text-sm rounded-full bg-emerald-500 text-white hover:bg-emerald-400 px-4 py-2 mx-1">会員登録</Link>
+            <Link href="/login"  className="text-sm rounded-full bg-emerald-500 text-white hover:bg-emerald-400 px-4 py-2 mx-1">ログイン</Link>
           </>
         ) : (
           <>
-            <button onClick={LogOut} className="rounded-md ring-1 ring-emerald-600 text-emerald-600 hover:opacity-75 px-4 py-2 mx-1">ログアウト</button>
+            <button onClick={LogOut} className="text-sm text-emerald-700">ログアウト</button>
           </>
         )
       }

@@ -33,32 +33,36 @@ export default function Signup() {
 
   return (
     <div className="flex flex-1 flex-col justify-center">
-      <div className="mx-auto w-full max-w-sm">
-        <h2 className="text-2xl text-center">会員登録</h2>
+      <div className="w-full p-2 bg-emerald-50 border-b border-emerald-200">
+        <h2 className="text-sm text-emerald-600">会員登録</h2>
       </div>
       <div className="mx-auto w-full max-w-sm mt-8">
         <form onSubmit={(event) => submit(event)}>
-          <ErrorMessages messages={errorMessages} />
+          <ErrorMessages messages={errorMessages}/>
           <div>
             <label htmlFor="email" className="block">メールアドレス</label>
-            <input type="email" required name="email" id="email" className="block w-full rounded-md ring-1 ring-inset ring-gray-300 p-2 mt-1" />
+            <input type="email" required name="email" id="email"
+                   className="block w-full rounded-md ring-1 ring-inset ring-gray-300 p-2 mt-1"/>
           </div>
           <div className="mt-6">
             <label htmlFor="password" className="block">パスワード</label>
-            <input type="password" required name="password" id="password" minLength={8} maxLength={16}  className="block w-full rounded-md ring-1 ring-inset ring-gray-300 p-2 mt-1" />
+            <input type="password" required name="password" id="password" minLength={8} maxLength={16}
+                   className="block w-full rounded-md ring-1 ring-inset ring-gray-300 p-2 mt-1"/>
             <div className="text-sm text-gray-500 mt-1">
               英数字 8〜16文字
             </div>
           </div>
           <div className="mt-6">
             <label htmlFor="displayName" className="block">表示名</label>
-            <input type="text" name="display_name" id="displayName" maxLength={16} className="block w-full rounded-md ring-1 ring-inset ring-gray-300 p-2 mt-1" />
+            <input type="text" name="display_name" id="displayName" maxLength={16}
+                   className="block w-full rounded-md ring-1 ring-inset ring-gray-300 p-2 mt-1"/>
             <div className="text-sm text-gray-500 mt-1">
               16文字以下
             </div>
           </div>
           <div className="mt-6">
-            <input type="submit" className="w-full rounded-md bg-emerald-600 hover:bg-emerald-500 py-2 text-white" value="会員登録" />
+            <input type="submit" className="w-full rounded-md bg-emerald-500 hover:bg-emerald-400 py-2 text-white"
+                   value="会員登録"/>
           </div>
         </form>
       </div>
